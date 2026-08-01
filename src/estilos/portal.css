@@ -1,0 +1,193 @@
+/**
+ * Estilos del Portal_Acceso.
+ *
+ * Requisito 6.1: esta hoja no declara ningun literal de color. Todo color
+ * proviene de `var(--...)` definido en `tokens.css`.
+ *
+ * Requisito 6.3: el fondo es un degradado de negro profundo a azul noche
+ * (`--fondo-cielo-alto` a `--fondo-cielo-bajo`) con los puntos luminosos que
+ * genera `src/vista/portal/cielo-fondo.ts`, cada uno con su ciclo de animacion
+ * entre 4000 y 12000 milisegundos; el campo de entrada lleva borde dorado
+ * (`--borde-acento`) y el boton de ingreso, fondo dorado (`--fondo-boton`) con
+ * el rotulo en `--texto-sobre-dorado`, la pareja de contraste que verifica el
+ * Requisito 6.2.
+ *
+ * Requisito 7.5: el titileo solo corre bajo la clase `cielo-fondo--animado`,
+ * que el modulo de vista no aplica cuando el sistema declara movimiento
+ * reducido. La consulta de medios de esta hoja lo desactiva ademas por si la
+ * clase quedara aplicada al cambiar la preferencia.
+ *
+ * Las duraciones se declaran solo con tokens `--duracion-*`: `--duracion-punto`
+ * y `--duracion-retardo-punto` son los que el modulo de vista escribe en cada
+ * punto, y sus valores por omision provienen de `tokens.css`.
+ */
+
+@import './tokens.css';
+
+/* --- Lienzo del portal --------------------------------------------------- */
+
+.portal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: clamp(var(--espacio-4), 2vw, var(--espacio-8));
+  /* El cielo se recorta en el marco del portal: ningun punto puede empujar el
+     ancho del documento (Requisito 7.1). */
+  overflow: hidden;
+  background-color: var(--fondo-base);
+  /* Aisla el apilamiento para que el fondo decorativo no suba por encima de
+     otras capas de la Aplicacion. */
+  isolation: isolate;
+}
+
+/* El contenido del portal se pinta sobre el fondo decorativo. */
+.portal > *:not(.cielo-fondo) {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 28rem;
+}
+
+/* --- Cielo nocturno del fondo (Requisito 6.3) --------------------------- */
+
+.cielo-fondo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  /* Decoracion: no intercepta el puntero ni entra en el arbol accesible. */
+  pointer-events: none;
+  background-image: linear-gradient(
+    to bottom,
+    var(--fondo-cielo-alto) 0%,
+    var(--fondo-cielo-bajo) 100%
+  );
+}
+
+.cielo-fondo__punto {
+  /* Valores por omision: el modulo de vista los reemplaza punto por punto. */
+  --punto-x: 50%;
+  --punto-y: 50%;
+  --punto-diametro: 2px;
+  --punto-opacidad: 1;
+  --duracion-punto: var(--duracion-titileo-min);
+  --duracion-retardo-punto: var(--duracion-nula);
+
+  position: absolute;
+  left: var(--punto-x);
+  top: var(--punto-y);
+  width: var(--punto-diametro);
+  height: var(--punto-diametro);
+  /* El punto se centra en su coordenada, asi que el borde no la desplaza. */
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: var(--estrella);
+  box-shadow: 0 0 calc(var(--punto-diametro) * 2) var(--estrella-halo);
+  opacity: var(--punto-opacidad);
+}
+
+/* Requisito 6.3: el ciclo de cada punto dura entre 4000 y 12000 ms, valor que
+   llega en `--duracion-punto`. La animacion solo toca `opacity` y `transform`,
+   de modo que corre en el compositor y no ocupa el hilo principal. */
+.cielo-fondo--animado .cielo-fondo__punto {
+  animation-name: titileo-portal;
+  animation-duration: var(--duracion-punto);
+  animation-delay: var(--duracion-retardo-punto);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: var(--curva-aparicion);
+  animation-fill-mode: both;
+  will-change: opacity, transform;
+}
+
+@keyframes titileo-portal {
+  from {
+    opacity: calc(var(--punto-opacidad) * 0.35);
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  to {
+    opacity: var(--punto-opacidad);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* --- Formulario de ingreso ----------------------------------------------
+   Los nombres de clase son los que exporta `CLASES_PORTAL` en
+   `src/vista/portal/portal.ts`: el DOM es la fuente de verdad y esta hoja
+   apunta exactamente a esas clases. Una prueba unitaria compara ambos lados,
+   de modo que la pareja no puede volver a desincronizarse. */
+
+.portal__formulario {
+  display: grid;
+  gap: var(--espacio-4);
+  padding: var(--espacio-6);
+  border: 1px solid var(--borde-tenue);
+  border-radius: var(--radio-borde);
+  background-color: var(--fondo-hundido);
+}
+
+.portal__invitacion {
+  margin: 0;
+  color: var(--texto-principal);
+  text-wrap: balance;
+}
+
+/* Requisito 6.3: borde dorado del campo de entrada. Los selectores de elemento
+   acompanan a las clases para que el dorado no dependa del nombre que use la
+   plantilla del portal. */
+.portal input[type='password'],
+.portal__campo {
+  width: 100%;
+  border-color: var(--borde-acento);
+  color: var(--texto-principal);
+  background-color: var(--fondo-elevado);
+}
+
+.portal input[type='password']:disabled,
+.portal__campo:disabled {
+  border-color: var(--borde-deshabilitado);
+  color: var(--texto-deshabilitado);
+}
+
+/* Requisito 6.3: fondo dorado del boton de ingreso, con el rotulo en negro
+   profundo (Requisito 6.2). */
+.portal button[type='submit'],
+.portal__ingreso {
+  border-color: var(--borde-acento);
+  background-color: var(--fondo-boton);
+  color: var(--texto-sobre-dorado);
+}
+
+.portal button[type='submit']:hover:not(:disabled),
+.portal__ingreso:hover:not(:disabled) {
+  background-color: var(--fondo-boton-senalado);
+}
+
+/* Requisito 6.2: deshabilitado, el boton deja el relleno dorado y vuelve a la
+   superficie neutra de control, igual que en `base.css`. */
+.portal button[type='submit']:disabled,
+.portal__ingreso:disabled {
+  border-color: var(--borde-deshabilitado);
+  background-color: var(--fondo-boton-deshabilitado);
+  color: var(--texto-deshabilitado);
+}
+
+/* Mensaje de reintento o de falta de validacion (Requisitos 1.4 y 1.11). */
+.portal__mensaje {
+  margin: 0;
+  color: var(--texto-secundario);
+  /* Reserva la altura de una linea para que el mensaje no desplace el boton
+     cuando aparece o desaparece. */
+  min-height: var(--espacio-6);
+}
+
+/* --- Requisito 7.5: sin movimiento continuo ----------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cielo-fondo__punto {
+    animation-name: none;
+    animation-iteration-count: 1;
+  }
+}

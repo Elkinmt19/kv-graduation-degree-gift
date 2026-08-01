@@ -1,0 +1,156 @@
+/**
+ * Estilos del Lienzo_Carta.
+ *
+ * Requisito 6.1: esta hoja no declara ningun literal de color. Todo color
+ * proviene de `var(--...)` definido en `tokens.css`.
+ *
+ * Requisitos 5.8 y 6.7: el texto de la Carta usa la familia serif
+ * (`--familia-carta`) con el cuerpo y el alto de linea que nunca bajan de 16 px
+ * ni de 1.6 (`--cuerpo-carta`, `--alto-linea-carta`), los mismos tokens que la
+ * regla `.texto-carta` de `base.css` y que verifica la propiedad de tipografia.
+ *
+ * Requisito 5.4: el desplazamiento vive dentro de `.carta__desplazable`, con
+ * `overflow-y: auto` para habilitarlo solo cuando el contenido excede la altura
+ * disponible, `overflow-x: hidden` para que nunca aparezca desplazamiento
+ * horizontal (tambien Requisito 7.1) y `overscroll-behavior: contain` para que
+ * llegar a un extremo no propague el desplazamiento al documento ni arrastre el
+ * Mapa_Estelar. La altura maxima es lo que hace posible ese desplazamiento
+ * interno: sin un tope, la columna creceria y desplazaria la pagina entera.
+ *
+ * Requisito 5.2: la aparicion progresiva dura `--duracion-carta` (1200 ms) y
+ * solo se aplica en el estado `apareciendo`, que `src/vista/carta/lienzo.ts`
+ * escribe unicamente en la primera presentacion de la sesion. En las siguientes
+ * el estado es `revelada` y el texto arranca con opacidad total (Requisito 5.3).
+ *
+ * Requisito 7.5: con movimiento reducido, `tokens.css` anula `--duracion-carta`
+ * y `base.css` anula toda animacion; esta hoja retira ademas la animacion por si
+ * la preferencia se activa con la Carta ya montada.
+ *
+ * Los nombres de clase son los que exporta `CLASES_CARTA` en
+ * `src/vista/carta/lienzo.ts`: el DOM es la fuente de verdad y esta hoja apunta
+ * exactamente a esas clases.
+ */
+
+@import './tokens.css';
+
+/* --- Marco de la Carta --------------------------------------------------- */
+
+.carta {
+  /* Tope de altura del que depende el desplazamiento interno (Requisito 5.4).
+     Se declara aqui para que `.carta__desplazable` lo herede como variable y
+     una sola linea gobierne el alto de la Carta. */
+  --alto-max-carta: min(70vh, 44rem);
+
+  display: grid;
+  gap: var(--espacio-4);
+  padding: var(--espacio-6);
+  border: 1px solid var(--borde-tenue);
+  border-radius: var(--radio-borde);
+  background-color: var(--fondo-hundido);
+  /* Requisitos 5.8 y 6.7: cuerpo serif con los minimos del sistema. */
+  font-family: var(--familia-carta);
+  font-size: var(--cuerpo-carta);
+  font-weight: var(--peso-carta);
+  line-height: var(--alto-linea-carta);
+  color: var(--texto-principal);
+  /* Requisito 7.1: la Carta nunca excede el ancho de su columna. */
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* --- Region desplazable (Requisito 5.4) ---------------------------------- */
+
+.carta__desplazable {
+  display: grid;
+  gap: var(--espacio-4);
+  max-height: var(--alto-max-carta);
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* El desplazamiento se detiene en los extremos de la Carta: no se propaga al
+     documento ni al Mapa_Estelar. */
+  overscroll-behavior: contain;
+  /* La barra reserva su espacio para que aparecer o desaparecer no reacomode el
+     texto ni provoque un desplazamiento horizontal. */
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--borde-tenue) var(--fondo-hundido);
+  padding-right: var(--espacio-2);
+}
+
+/* --- Saludo, parrafos y firma (Requisitos 5.1, 5.5, 5.6) ----------------- */
+
+.carta__saludo {
+  margin: 0;
+  color: var(--texto-principal);
+  font-style: italic;
+}
+
+.carta__parrafo {
+  margin: 0;
+  color: var(--texto-principal);
+  /* El texto de la Carta se lee en bloques: la sangria no hace falta porque
+     cada parrafo es un elemento propio separado por la rejilla. */
+  text-align: left;
+}
+
+.carta__firma {
+  margin: 0;
+  color: var(--texto-secundario);
+  text-align: right;
+  font-style: italic;
+}
+
+/* --- Mensaje de respaldo (Requisito 5.7) -------------------------------- */
+
+.carta__respaldo {
+  margin: 0;
+  color: var(--texto-secundario);
+}
+
+/* --- Aparicion progresiva (Requisitos 5.2, 5.3) ------------------------- */
+
+/* Solo `opacity` y `transform` cambian, de modo que la animacion corre en el
+   compositor y no ocupa el hilo principal. */
+.carta[data-estado='apareciendo'] .carta__desplazable {
+  animation-name: aparicion-carta;
+  animation-duration: var(--duracion-carta);
+  animation-delay: var(--duracion-nula);
+  animation-iteration-count: 1;
+  animation-timing-function: var(--curva-aparicion);
+  animation-fill-mode: both;
+  will-change: opacity, transform;
+}
+
+/* Requisito 5.3: presentada de nuevo en la misma sesion, la Carta arranca en su
+   estado final, con opacidad total y sin desplazamiento de entrada. */
+.carta[data-estado='revelada'] .carta__desplazable,
+.carta[data-estado='respaldo'] .carta__desplazable {
+  opacity: 1;
+  transform: none;
+  animation-name: none;
+}
+
+@keyframes aparicion-carta {
+  from {
+    opacity: 0;
+    transform: translateY(var(--espacio-3));
+  }
+
+  to {
+    /* Requisito 5.2: al termino del intervalo el texto queda completo y con
+       opacidad total. */
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Requisito 7.5: sin animacion de aparicion -------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .carta[data-estado='apareciendo'] .carta__desplazable {
+    opacity: 1;
+    transform: none;
+    animation-name: none;
+  }
+}

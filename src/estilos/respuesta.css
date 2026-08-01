@@ -1,0 +1,113 @@
+/**
+ * Disposicion responsiva de la Pagina_Regalo.
+ *
+ * Requisito 6.1: esta hoja no declara ningun literal de color; los unicos
+ * colores que usa provienen de `var(--...)` definido en `tokens.css`.
+ *
+ * Requisito 7.1: entre 320 y 1920 px no existe desplazamiento horizontal.
+ * Toda celda de la rejilla declara `min-width: 0` (para que el minimo
+ * automatico de contenido no ensanche la pista) y `overflow-wrap: anywhere`
+ * (para que una palabra larga o una URL no empujen el ancho).
+ *
+ * Requisito 5.9: por debajo de 768 px la Pagina_Regalo es una sola columna con
+ * el Lienzo_Carta debajo del Mapa_Estelar. El orden del DOM es Mapa_Estelar y
+ * despues Lienzo_Carta, por lo que la columna unica ya los apila en ese orden
+ * sin `order` ni reordenamientos (que romperian el orden de tabulacion del
+ * Requisito 7.4).
+ *
+ * Requisitos 7.2, 7.3, 7.9: el umbral de dos columnas se deriva de la
+ * aritmetica de los minimos, no de una convencion de dispositivo:
+ *
+ *     480 px (Mapa_Estelar) + 320 px (Lienzo_Carta) + 32 px (separacion)
+ *   + 2 x 24 px (relleno a 2vw sobre 1200 px) = 880 px
+ *
+ * Por debajo de 880 px se usa una sola columna: eso cubre el Requisito 5.9
+ * (< 768 px) y la rama de una sola columna del Requisito 7.9 (768-1023 px
+ * cuando el Lienzo_Carta no conserva 320 px). Entre 880 y 1023 px hay dos
+ * columnas, la rama del Requisito 7.3. Desde 1024 px las dos columnas estan
+ * garantizadas con los minimos del Requisito 7.2.
+ *
+ * El umbral queda unos 13 px por encima del punto aritmetico exacto (866.7 px,
+ * ver `src/vista/disposicion.ts`), margen que absorbe el ancho de una barra de
+ * desplazamiento clasica, incluida en `innerWidth` pero ausente del area de
+ * contenido.
+ *
+ * Requisito 7.11: por debajo de 768 px, todo control interactivo conserva un
+ * area tactil de 44 x 44 px y una separacion de 8 px.
+ *
+ * `src/vista/disposicion.ts` reproduce estos mismos numeros como funcion pura,
+ * para poder verificar la disposicion sin navegador.
+ */
+
+@import './tokens.css';
+
+/* --- Rejilla del regalo ------------------------------------------------- */
+
+.regalo {
+  display: grid;
+  gap: var(--espacio-8); /* 2rem = 32 px, la separacion del umbral */
+  padding: clamp(var(--espacio-4), 2vw, var(--espacio-8));
+  /* Una sola columna hasta el umbral: el Lienzo_Carta queda debajo del
+     Mapa_Estelar por orden del DOM (Requisitos 5.9 y 7.9). */
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Requisito 7.1: ninguna celda puede crecer por encima de su pista. */
+.regalo > * {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.regalo__mapa,
+.regalo__carta {
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+}
+
+/* Requisitos 7.2, 7.3: dos columnas desde el umbral, con los minimos de
+   480 px para el Mapa_Estelar y 320 px para el Lienzo_Carta. La fraccion
+   1.35 : 1 da al mapa el area mayor sin bajar del minimo de la carta. */
+@media (min-width: 880px) {
+  .regalo {
+    grid-template-columns: minmax(480px, 1.35fr) minmax(320px, 1fr);
+  }
+}
+
+/* --- Areas tactiles (Requisito 7.11) ------------------------------------ */
+
+/* `base.css` ya fija el minimo de los controles nativos; aqui se extiende a
+   todo elemento interactivo de la Pagina_Regalo, incluidos los que exponen su
+   rol con ARIA, y se declara la separacion minima entre controles vecinos. */
+@media (max-width: 767px) {
+  .regalo button,
+  .regalo input,
+  .regalo select,
+  .regalo textarea,
+  .regalo summary,
+  .regalo a[href],
+  .regalo [role='button'],
+  .regalo [role='switch'],
+  .regalo [role='slider'] {
+    min-width: var(--area-tactil-min);
+    min-height: var(--area-tactil-min);
+  }
+
+  .regalo button + button,
+  .regalo button + a[href],
+  .regalo a[href] + button,
+  .regalo [role='button'] + [role='button'] {
+    margin-left: var(--separacion-tactil);
+  }
+
+  /* Los controles apilados conservan la misma separacion en vertical. */
+  .regalo .controles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--separacion-tactil);
+  }
+}

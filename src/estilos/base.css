@@ -1,0 +1,214 @@
+/**
+ * Estilos base de la Aplicacion.
+ *
+ * Requisito 6.1: esta hoja no declara ningun literal de color. Todo color
+ * proviene de `var(--...)` definido en `tokens.css`.
+ * Requisito 6.2: el texto usa los roles de contraste verificado del sistema.
+ * Requisito 6.7: serif para la Carta, sans-serif para rotulos y controles.
+ * Requisito 5.8: el cuerpo de la Carta conserva sus minimos de tamano y de
+ * alto de linea en todo ancho de ventana.
+ * Requisito 7.5: con movimiento reducido, animaciones y transiciones se anulan.
+ */
+
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--borde-tenue) var(--fondo-base);
+}
+
+body,
+h1,
+h2,
+h3,
+p,
+figure,
+blockquote,
+ul,
+ol {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--fondo-base);
+  color: var(--texto-principal);
+  font-family: var(--familia-ui);
+  font-size: var(--cuerpo-ui);
+  line-height: var(--alto-linea-ui);
+  /* Requisito 7.1: nunca hay desplazamiento horizontal entre 320 y 1920 px. */
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+}
+
+/* Requisito 6.7: los rotulos y titulos usan la familia sans-serif con su
+   generica de respaldo; la Carta usa la serif (ver `.texto-carta`). */
+h1,
+h2,
+h3 {
+  font-family: var(--familia-ui);
+  font-weight: var(--peso-titulo);
+  letter-spacing: var(--espaciado-titulo);
+  line-height: 1.25;
+  color: var(--texto-principal);
+  text-wrap: balance;
+}
+
+p {
+  color: var(--texto-principal);
+}
+
+/* Requisitos 5.8 y 6.7: cuerpo de la Carta con serif, >= 16 px y >= 1.6. */
+.texto-carta {
+  font-family: var(--familia-carta);
+  font-size: var(--cuerpo-carta);
+  font-weight: var(--peso-carta);
+  line-height: var(--alto-linea-carta);
+  color: var(--texto-principal);
+}
+
+.texto-secundario {
+  color: var(--texto-secundario);
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* Controles: nativos, para que Enter y la barra espaciadora funcionen sin
+   codigo adicional (Requisito 7.10). */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  background-color: var(--fondo-elevado);
+  border: 1px solid var(--borde-tenue);
+  border-radius: var(--radio-borde);
+  transition-property: background-color, border-color, color, opacity;
+  transition-duration: var(--duracion-inmediata);
+  transition-timing-function: var(--curva-aparicion);
+}
+
+/* Requisito 6.3: el boton de ingreso lleva fondo dorado. Su rotulo va en
+   `--texto-sobre-dorado` (negro profundo), la pareja que verifica el
+   Requisito 6.2 sobre un relleno dorado, tanto en reposo como al senalarlo. */
+button {
+  cursor: pointer;
+  padding: var(--espacio-3) var(--espacio-6);
+  background-color: var(--fondo-boton);
+  border-color: var(--borde-acento);
+  color: var(--texto-sobre-dorado);
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--fondo-boton-senalado);
+}
+
+/* Requisito 6.2, estado deshabilitado: el boton deja el relleno dorado y vuelve
+   a la superficie neutra de control, porque un dorado atenuado bajo rotulo
+   dorado no alcanza 4.5:1. */
+button:disabled {
+  cursor: not-allowed;
+  background-color: var(--fondo-boton-deshabilitado);
+  border-color: var(--borde-deshabilitado);
+  color: var(--texto-deshabilitado);
+}
+
+input {
+  padding: var(--espacio-3) var(--espacio-4);
+  border-color: var(--borde-acento);
+  color: var(--texto-principal);
+}
+
+input:disabled {
+  border-color: var(--borde-deshabilitado);
+  color: var(--texto-deshabilitado);
+}
+
+/* Requisito 7.4: aro de foco dorado de al menos 2 px sobre el elemento
+   enfocado, alcanzable con pulsaciones sucesivas de Tab. El aro es la unica
+   senal de foco: esta regla no toca el `color`, porque con especificidad 0,1,0
+   ganaria al `color` de los controles que ya declaran su pareja verificada
+   (`button` con `--texto-sobre-dorado`, `button:disabled` con
+   `--texto-deshabilitado`) y podria dejar el rotulo por debajo de 4.5:1
+   (Requisito 6.2). */
+:focus-visible {
+  outline: var(--grosor-foco) solid var(--foco);
+  outline-offset: var(--separacion-foco);
+}
+
+/* Requisito 6.2, estado de foco: el texto enlazado no declara ninguna pareja
+   propia, asi que al enfocarse sube al dorado pleno sobre las superficies
+   oscuras que lo contienen (9.6:1 sobre `--fondo-base`, 8.4:1 sobre
+   `--fondo-elevado`). */
+a:focus-visible {
+  color: var(--texto-enfocado);
+}
+
+/* Requisito 7.11: por debajo de 768 px, cada control mantiene un area tactil
+   minima de 44 x 44 px y una separacion minima de 8 px. */
+@media (max-width: 767px) {
+  button,
+  input,
+  select,
+  textarea,
+  a[role='button'] {
+    min-width: var(--area-tactil-min);
+    min-height: var(--area-tactil-min);
+    margin: var(--separacion-tactil);
+  }
+}
+
+/* Contenido reservado a tecnologias de asistencia. */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  border: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Requisito 7.5: la preferencia de movimiento reducido anula toda animacion
+   de aparicion y todo movimiento continuo, dejando el estado final visible de
+   inmediato. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: var(--duracion-nula) !important;
+    animation-delay: var(--duracion-nula) !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: var(--duracion-nula) !important;
+    transition-delay: var(--duracion-nula) !important;
+  }
+}

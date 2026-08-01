@@ -1,0 +1,21 @@
+{
+  "$comentario": "Archivo_Configuracion del regalo. CONFIRMADO por el autor: (1) instanteGraduacion = 2026-07-31T18:00:00-05:00, es decir el 31 de julio de 2026 a las 6:00 p. m. hora de Colombia; (2) lugarGraduacion, la ceremonia es en la Cra. 1 #26a-47, Neiva, Huila. Las coordenadas son una APROXIMACION de esa direccion (franja oriental de Neiva, junto al rio Magdalena) con 4 decimales, no una medicion: un desplazamiento de unos cientos de metros mueve altitud y azimut en microgrados, ordenes de magnitud por debajo del margen de 0.1 grados del Requisito 3.8. PROVISIONAL, pendiente de la version definitiva del autor (tareas 19.3 y 19.6): (a) hashClave, calculado con npm run hash-clave -- para una clave de prueba desechable (\"clave de prueba\"), solo para que la construccion y el Portal_Acceso se puedan ejercitar; la clave definitiva nunca debe quedar escrita en el repositorio (Requisito 1.6); (b) carta.saludo, carta.parrafos y carta.firma, texto provisional de relleno para poder ver el Lienzo_Carta funcionando.",
+  "hashClave": "9b9a477dc2991a0c756e3500dfa86721416819674dd8118e797a0d8f8cf5c7b6",
+  "instanteGraduacion": "2026-07-31T18:00:00-05:00",
+  "lugarGraduacion": {
+    "nombre": "Cra. 1 #26a-47, Neiva, Huila",
+    "latitud": 2.9484,
+    "longitud": -75.2795
+  },
+  "carta": {
+    "saludo": "Para KawaValen, en la noche de su grado",
+    "parrafos": [
+      "Hoy te graduas de fisica, y me parece justo que el regalo mire hacia arriba: al mismo cielo que te hizo preguntar por que las cosas caen, por que la luz se dobla y por que el universo se deja describir con tan pocas reglas.",
+      "Este mapa no es una metafora. Es el cielo real de Neiva en el instante exacto de tu ceremonia, con las estrellas donde de verdad estaban. Lo que ves aqui es geometria, tiempo y un poco de terquedad: las tres cosas que te trajeron hasta este dia.",
+      "Que sigas midiendo, dudando y celebrando. Feliz grado, doctora en preguntas."
+    ],
+    "firma": "Con carino, para la nueva fisica de la casa"
+  },
+  "guinosPersonales": true,
+  "musica": false
+}

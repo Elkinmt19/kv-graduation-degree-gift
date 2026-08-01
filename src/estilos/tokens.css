@@ -1,0 +1,148 @@
+/**
+ * Sistema de diseno: unica hoja autorizada para declarar literales de color.
+ *
+ * Requisito 6.1: solo los cuatro colores de la Paleta_Regalo, con opacidades
+ * entre 0.05 y 1.0. Ninguna otra hoja declara literales de color: fuera de
+ * este archivo el unico color permitido es `var(--...)`.
+ *
+ * Requisito 6.2: los roles de texto se derivan del dorado sobre negro profundo
+ * y ninguno baja de 4.5:1, ni en reposo ni al senalar, enfocar o deshabilitar.
+ * Contrastes calculados con la luminancia relativa de WCAG 2.1 sobre #05060D:
+ * dorado pleno 9.62:1, al 92 % 8.20:1, al 84 % 6.93:1, al 78 % 6.06:1
+ * (opacidad minima expuesta para texto). Sobre las superficies oscuras el texto
+ * es dorado; sobre el relleno dorado del boton se invierte la pareja y el
+ * rotulo pasa a negro profundo, que da 9.62:1 en reposo y 7.08:1 al senalarlo.
+ * El azul electrico da 3.05:1 sobre negro profundo, por lo que queda prohibido
+ * para texto y se reserva a lineas de constelacion, reticula y acentos
+ * decorativos.
+ *
+ * Requisito 6.7: tipografia serif para la Carta y sans-serif para rotulos,
+ * etiquetas y controles, cada una con su familia generica de respaldo.
+ *
+ * Requisito 5.8: el cuerpo de la Carta nunca baja de 16 px ni de 1.6 de alto
+ * de linea, para todo ancho de ventana entre 320 y 1920 px.
+ *
+ * Requisito 7.5: con la preferencia de movimiento reducido, los tokens de
+ * ritmo se anulan y todo contenido queda en su estado final.
+ */
+
+:root {
+  /* --- Paleta_Regalo -----------------------------------------------------
+     Cada color se expresa en hexadecimal y en componentes RGB, para poder
+     derivar opacidades sin introducir ningun color nuevo. */
+  --negro-profundo: #05060d;
+  --negro-profundo-rgb: 5 6 13;
+  --azul-noche: #0b2a6f;
+  --azul-noche-rgb: 11 42 111;
+  --azul-electrico: #1e4fd8;
+  --azul-electrico-rgb: 30 79 216;
+  --dorado: #d4af37;
+  --dorado-rgb: 212 175 55;
+
+  /* --- Roles de fondo --------------------------------------------------- */
+  --fondo-base: rgb(var(--negro-profundo-rgb) / 1);
+  /* Azul noche al 45 %: por debajo del 55 % anterior para dejar margen sobre
+     4.5:1 cuando un panel elevado se anida dentro de otro y cuando el texto
+     baja a la opacidad minima expuesta (Requisito 6.2). */
+  --fondo-elevado: rgb(var(--azul-noche-rgb) / 0.45);
+  --fondo-hundido: rgb(var(--negro-profundo-rgb) / 0.85);
+  --fondo-cielo-alto: rgb(var(--negro-profundo-rgb) / 1);
+  --fondo-cielo-bajo: rgb(var(--azul-noche-rgb) / 0.9);
+  /* Superficies del boton de ingreso. El Requisito 6.3 pide dorado en el fondo
+     del boton, asi que el estado activo es dorado pleno y el senalado un dorado
+     apenas velado; sobre ambos el rotulo va en negro profundo
+     (`--texto-sobre-dorado`), que es la pareja que el Requisito 6.2 verifica:
+     9.62:1 en reposo y 7.08:1 al senalarlo (7.25:1 si el boton vive dentro de un
+     panel elevado). El estado deshabilitado no puede dimir el dorado sobre el
+     dorado -esa pareja cae a 3.51:1-, asi que el boton pierde su relleno y
+     vuelve a la superficie neutra de control (azul noche al 45 %, la misma
+     opacidad de `--fondo-elevado`, techo de azul noche bajo texto): con el
+     rotulo en `--texto-deshabilitado` da 5.51:1, y 5.02:1 dentro de un panel
+     elevado. */
+  --fondo-boton: rgb(var(--dorado-rgb) / 1);
+  --fondo-boton-senalado: rgb(var(--dorado-rgb) / 0.85);
+  --fondo-boton-deshabilitado: rgb(var(--azul-noche-rgb) / 0.45);
+  --velo-fondo: rgb(var(--negro-profundo-rgb) / 0.6);
+
+  /* --- Roles de texto ---------------------------------------------------
+     Los roles dorados alcanzan >= 4.5:1 sobre `--fondo-base` y sobre toda
+     superficie oscura del sistema; `--texto-sobre-dorado` es el unico que
+     invierte la pareja y solo se declara sobre el relleno dorado del boton. */
+  --texto-principal: rgb(var(--dorado-rgb) / 0.92); /* 8.20:1 */
+  --texto-secundario: rgb(var(--dorado-rgb) / 0.84); /* 6.93:1 */
+  --texto-deshabilitado: rgb(var(--dorado-rgb) / 0.78); /* 6.06:1, minimo */
+  --texto-senalado: rgb(var(--dorado-rgb) / 1); /* 9.62:1 */
+  --texto-enfocado: rgb(var(--dorado-rgb) / 1); /* 9.62:1 */
+  /* Rol del rotulo que va sobre el relleno dorado del boton: negro profundo,
+     la unica familia que sostiene 4.5:1 contra el dorado. Da 9.62:1 sobre
+     `--fondo-boton` y 7.08:1 sobre `--fondo-boton-senalado` (9.62:1 y 7.25:1
+     cuando el boton vive dentro de un panel elevado). */
+  --texto-sobre-dorado: rgb(var(--negro-profundo-rgb) / 1);
+  --texto-etiqueta-mapa: rgb(var(--dorado-rgb) / 0.92);
+
+  /* --- Roles de borde --------------------------------------------------- */
+  --borde-acento: rgb(var(--dorado-rgb) / 1);
+  --borde-tenue: rgb(var(--dorado-rgb) / 0.35);
+  --borde-frio: rgb(var(--azul-electrico-rgb) / 0.45);
+  --borde-deshabilitado: rgb(var(--dorado-rgb) / 0.3);
+
+  /* --- Roles de reticula y trazo del cielo (decorativos, no texto) ------- */
+  --linea-constelacion: rgb(var(--azul-electrico-rgb) / 0.55);
+  --linea-obsidian: rgb(var(--dorado-rgb) / 0.9);
+  --reticula: rgb(var(--azul-electrico-rgb) / 0.18);
+  --horizonte: rgb(var(--dorado-rgb) / 0.45);
+  --estrella: rgb(var(--dorado-rgb) / 0.95);
+  --estrella-halo: rgb(var(--azul-electrico-rgb) / 0.25);
+
+  /* --- Rol de foco (Requisito 7.4: aro dorado de al menos 2 px) ---------- */
+  --foco: rgb(var(--dorado-rgb) / 1);
+  --grosor-foco: 2px;
+  --separacion-foco: 2px;
+
+  /* --- Tipografia (Requisito 6.7) --------------------------------------- */
+  --familia-carta: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --familia-ui: 'Inter', system-ui, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  /* Cuerpo de la Carta (Requisito 5.8): el minimo del clamp es 1rem = 16 px
+     y el alto de linea supera 1.6 en todo ancho de ventana. */
+  --cuerpo-carta: clamp(1rem, 0.95rem + 0.35vw, 1.1875rem);
+  --alto-linea-carta: 1.7;
+  --cuerpo-ui: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+  --alto-linea-ui: 1.5;
+  --cuerpo-etiqueta-mapa: 0.75rem; /* 12 px, Requisito 4.4 */
+  --peso-carta: 400;
+  --peso-titulo: 600;
+  --espaciado-titulo: 0.02em;
+
+  /* --- Ritmo y espacio ------------------------------------------------- */
+  --espacio-1: 0.25rem;
+  --espacio-2: 0.5rem;
+  --espacio-3: 0.75rem;
+  --espacio-4: 1rem;
+  --espacio-6: 1.5rem;
+  --espacio-8: 2rem;
+  --radio-borde: 0.5rem;
+  --area-tactil-min: 44px; /* Requisito 7.11 */
+  --separacion-tactil: 8px; /* Requisito 7.11 */
+
+  /* --- Movimiento ------------------------------------------------------ */
+  --duracion-nula: 0ms;
+  --duracion-inmediata: 120ms;
+  --duracion-carta: 1200ms; /* Requisito 5.2 */
+  --duracion-respuesta: 150ms; /* Requisitos 4.5, 4.14 */
+  --duracion-titileo-min: 4000ms; /* Requisito 6.3 */
+  --duracion-titileo-max: 12000ms; /* Requisito 6.3 */
+  --curva-aparicion: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Requisito 7.5: se omite toda animacion de aparicion y todo movimiento
+   continuo; el contenido aparece directamente en su estado final. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duracion-inmediata: var(--duracion-nula);
+    --duracion-carta: var(--duracion-nula);
+    --duracion-respuesta: var(--duracion-nula);
+    --duracion-titileo-min: var(--duracion-nula);
+    --duracion-titileo-max: var(--duracion-nula);
+  }
+}

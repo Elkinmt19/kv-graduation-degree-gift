@@ -1,0 +1,146 @@
+/**
+ * Estilos del Mapa_Estelar.
+ *
+ * Requisito 6.1: esta hoja no declara ningun literal de color. Todo color viene
+ * de `var(--...)` declarado en `tokens.css`, incluidos los del cielo, que
+ * `src/vista/mapa/capas.ts` lee en tiempo de ejecucion con `getComputedStyle`
+ * para poder pasarlos al lienzo: `contexto.fillStyle` no resuelve propiedades
+ * personalizadas, de modo que los tokens se declaran aqui y se resuelven alli.
+ *
+ * Requisito 4.12: el lienzo ocupa el ancho de su columna y su alto lo fija
+ * `--alto-mapa`, con un piso de 296 px para que el Circulo_Horizonte conserve su
+ * diametro minimo de 280 px mas el margen de 8 px por lado que calcula
+ * `src/vista/mapa/circulo.ts`. El tamano en pixeles del almacen de respaldo lo
+ * escribe `ajustarLienzo`, no esta hoja.
+ *
+ * Requisito 7.1: nada del mapa desborda horizontalmente: `min-width: 0` permite
+ * que la columna se encoja y `max-width: 100%` evita que el lienzo la empuje.
+ *
+ * Requisitos 4.5 y 4.14: `touch-action: none` sobre el lienzo deja que los
+ * eventos de puntero de `interaccion.ts` lleguen sin que el navegador los
+ * interprete como desplazamiento, y la ficha de la estrella senalada se coloca
+ * sobre el mapa sin reacomodar nada al aparecer, para que la respuesta se vea de
+ * inmediato.
+ *
+ * Requisito 4.4: los rotulos del mapa usan `--cuerpo-etiqueta-mapa` (12 px, uno
+ * por encima del minimo exigido) y el color `--texto-etiqueta-mapa`, los mismos
+ * valores que el lienzo usa para las etiquetas y las marcas cardinales.
+ *
+ * Los nombres de clase son los que exportan `CLASES_MAPA` en
+ * `src/vista/mapa/capas.ts` y `CLASES_FICHA` en `src/vista/mapa/interaccion.ts`:
+ * el codigo de vista es la fuente de verdad y esta hoja apunta exactamente a
+ * esas clases.
+ */
+
+@import './tokens.css';
+
+/* --- Marco del mapa ------------------------------------------------------- */
+
+.mapa {
+  /* Alto del lienzo. El piso de 296 px es el diametro minimo de 280 px mas los
+     8 px de margen por lado que exige el Requisito 4.12. */
+  --alto-mapa: clamp(296px, 60vh, 40rem);
+
+  position: relative;
+  display: grid;
+  gap: var(--espacio-2);
+  justify-items: center;
+  padding: var(--espacio-4);
+  border: 1px solid var(--borde-frio);
+  border-radius: var(--radio-borde);
+  background-color: var(--fondo-cielo-alto);
+  /* Requisito 7.1: la columna puede encogerse sin desbordar. */
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* --- Lienzo del cielo ----------------------------------------------------- */
+
+.mapa__lienzo {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: var(--alto-mapa);
+  border-radius: var(--radio-borde);
+  /* Fondo de respaldo mientras el lienzo aun no tiene contexto 2D o mientras el
+     cielo se calcula (Requisito 4.10). */
+  background-color: var(--fondo-cielo-alto);
+  /* Requisitos 4.5 y 4.14: el gesto del dedo se resuelve como senalamiento, no
+     como desplazamiento del mapa. */
+  touch-action: none;
+}
+
+/* --- Rotulo de lugar y fecha (Requisito 4.6) ----------------------------- */
+
+.mapa__rotulo {
+  margin: 0;
+  color: var(--texto-etiqueta-mapa);
+  font-family: var(--familia-ui);
+  font-size: var(--cuerpo-etiqueta-mapa);
+  line-height: var(--alto-linea-ui);
+  text-align: center;
+}
+
+/* --- Mensaje de respaldo (Requisitos 4.9, 4.10, 4.13) -------------------- */
+
+.mapa__respaldo {
+  margin: 0;
+  color: var(--texto-secundario);
+  font-family: var(--familia-ui);
+  font-size: var(--cuerpo-ui);
+  line-height: var(--alto-linea-ui);
+  text-align: center;
+}
+
+/* --- Ficha de la Estrella senalada (Requisitos 4.5, 4.14) ---------------- */
+
+.mapa__ficha {
+  position: absolute;
+  top: var(--espacio-4);
+  left: var(--espacio-4);
+  display: grid;
+  gap: var(--espacio-1);
+  max-width: calc(100% - 2 * var(--espacio-4));
+  padding: var(--espacio-2) var(--espacio-3);
+  border: 1px solid var(--borde-tenue);
+  border-radius: var(--radio-borde);
+  background-color: var(--fondo-hundido);
+  font-family: var(--familia-ui);
+  font-size: var(--cuerpo-etiqueta-mapa);
+  line-height: var(--alto-linea-ui);
+  /* La ficha se superpone al cielo y nunca intercepta el puntero, para no
+     robarle el senalamiento al lienzo que esta debajo. */
+  pointer-events: none;
+}
+
+.mapa__ficha[hidden] {
+  display: none;
+}
+
+.mapa__ficha-nombre {
+  color: var(--texto-senalado);
+  font-weight: var(--peso-titulo);
+}
+
+.mapa__ficha-constelacion {
+  color: var(--texto-secundario);
+}
+
+.mapa__ficha-magnitud {
+  color: var(--texto-secundario);
+  /* Las cifras no bailan al cambiar de estrella. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Pantallas estrechas (Requisito 5.9) --------------------------------- */
+
+@media (max-width: 767px) {
+  .mapa {
+    padding: var(--espacio-3);
+  }
+
+  .mapa__lienzo {
+    /* Menos alto en vertical, sin bajar del piso que exige el Requisito 4.12. */
+    height: clamp(296px, 50vh, 24rem);
+  }
+}
