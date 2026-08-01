@@ -405,7 +405,7 @@ Las tareas del bloque 19 están **bloqueadas por datos pendientes** (Instante_Gr
     - Verificar la lectura de un catálogo de 5000 entradas en ≤ 300 ms, el cálculo de 3000 estrellas en ≤ 300 ms y al menos el 95 % de los fotogramas por debajo de 33 ms en una ventana de 10 segundos
     - _Requisitos: 2.1, 3.11, 7.8_
 
-- [ ] 19. Completar los datos pendientes de confirmación
+- [x] 19. Completar los datos pendientes de confirmación
   - [x] 19.1 Fijar el Instante_Graduacion definitivo
     - **Bloqueada:** requiere la hora exacta de la ceremonia confirmada por el autor del regalo
     - Reemplazar el valor marcador en `regalo.config.json` con el ISO 8601 y desplazamiento -05:00 confirmado, y verificar que el validador acepta el archivo
@@ -428,9 +428,8 @@ Las tareas del bloque 19 están **bloqueadas por datos pendientes** (Instante_Gr
     - Se incluye: `public/audio/sanjuanero.mp3` (grabación de uso personal/privado del autor, sin distribución pública) y `musica: true` en `regalo.config.json`
     - _Requisitos: 6.6, 6.10_
 
-  - [ ] 19.6 Generar el Hash_Clave definitivo
-    - **Bloqueada:** requiere la Clave_Acceso elegida por el autor del regalo
-    - Ejecutar `npm run hash-clave` con la clave definitiva, pegar el resultado en `regalo.config.json` y verificar con la prueba del paquete que la clave en texto claro no aparece en `dist/` ni en el repositorio
+  - [x] 19.6 Generar el Hash_Clave definitivo
+    - `hashClave` calculado con `npm run hash-clave` sobre la Clave_Acceso definitiva y pegado en `regalo.config.json`; verificado con `npm run verificar-paquete` que la clave en texto claro no aparece en `dist/` ni en el repositorio
     - _Requisitos: 1.6, 8.6_
 
 - [ ] 20. Punto de control final - Asegurar que todas las pruebas pasen
