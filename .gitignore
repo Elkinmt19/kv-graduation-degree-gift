@@ -5,3 +5,6 @@ dist/
 test-results/
 playwright-report/
 .vite/
+graphify-out/
+/artefactos/
+/de421.bsp

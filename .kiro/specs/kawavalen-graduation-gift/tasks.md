@@ -135,23 +135,23 @@ Las tareas del bloque 19 están **bloqueadas por datos pendientes** (Instante_Gr
     - Respetar las reglas de determinismo: sin reloj, sin azar, sin acumulación incremental de ángulos ni iteración sobre estructuras de orden no determinista
     - _Requisitos: 3.1, 3.6, 3.9, 3.10, 4.1, 4.7, 4.15_
 
-  - [ ] 5.12 Escribir la prueba de propiedad de determinismo del motor
+  - [x] 5.12 Escribir la prueba de propiedad de determinismo del motor
     - **Propiedad 14: El Motor_Astronomico es determinista**
     - **Valida: Requisito 3.6**
 
-  - [ ] 5.13 Escribir la prueba de propiedad metamórfica del día sidéreo
+  - [x] 5.13 Escribir la prueba de propiedad metamórfica del día sidéreo
     - **Propiedad 15: Un día sidéreo devuelve el cielo a su lugar**
     - **Valida: Requisito 3.7**
 
-  - [ ] 5.14 Escribir la prueba de propiedad de lugar o instante inválidos
+  - [x] 5.14 Escribir la prueba de propiedad de lugar o instante inválidos
     - **Propiedad 16: Un lugar o un instante inválidos impiden todo cálculo**
     - **Valida: Requisito 3.9**
 
-  - [ ] 5.15 Escribir la prueba de propiedad de visibilidad, selección de dibujo y omisión de segmentos
+  - [x] 5.15 Escribir la prueba de propiedad de visibilidad, selección de dibujo y omisión de segmentos
     - **Propiedad 17: Visibilidad, selección de dibujo y omisión de segmentos**
     - **Valida: Requisitos 3.10, 4.1, 4.15**
 
-  - [ ] 5.16 Escribir la prueba de propiedad de respuesta del cielo a instante y lugar
+  - [x] 5.16 Escribir la prueba de propiedad de respuesta del cielo a instante y lugar
     - **Propiedad 32: El cielo responde a los cambios de instante y de lugar**
     - **Valida: Requisito 8.2**
 
@@ -246,55 +246,55 @@ Las tareas del bloque 19 están **bloqueadas por datos pendientes** (Instante_Gr
     - Implementar el `ResizeObserver` con antirrebote de 150 ms que dispara el redibujo
     - _Requisitos: 4.12_
 
-  - [ ] 11.2 Escribir la prueba de propiedad de ajuste del Circulo_Horizonte
+  - [x] 11.2 Escribir la prueba de propiedad de ajuste del Circulo_Horizonte
     - **Propiedad 22: El Circulo_Horizonte cabe en cualquier tamaño de ventana admitido**
     - **Valida: Requisito 4.12**
 
-  - [ ] 11.3 Implementar las capas de dibujo del cielo
+  - [x] 11.3 Implementar las capas de dibujo del cielo
     - Crear `src/vista/mapa/capas.ts` con el degradado de fondo y el disco del horizonte, la retícula tenue, las líneas de constelación de 1.0 px solo con ambos extremos visibles, las estrellas con disco y halo según su radio, y las marcas cardinales N, E, S, O
     - Dibujar las capas estáticas una vez en un `OffscreenCanvas` y copiarlas con `drawImage`
     - Crear `src/estilos/mapa.css`
     - _Requisitos: 4.1, 4.3, 4.7, 4.15_
 
-  - [ ] 11.4 Implementar la colocación de etiquetas
+  - [x] 11.4 Implementar la colocación de etiquetas
     - Crear `src/vista/mapa/etiquetas.ts` con selección de estrellas visibles de magnitud ≤ 1.5, orden por magnitud ascendente, medición con `measureText`, colocación voraz sin solapamiento y tope de 30 etiquetas con fuente de 12 px
     - _Requisitos: 4.4_
 
-  - [ ] 11.5 Escribir la prueba de propiedad de las etiquetas del mapa
+  - [x] 11.5 Escribir la prueba de propiedad de las etiquetas del mapa
     - **Propiedad 19: Las etiquetas del mapa nunca se superponen y ceden por magnitud**
     - **Valida: Requisito 4.4**
 
-  - [ ] 11.6 Implementar la interacción con las estrellas
+  - [x] 11.6 Implementar la interacción con las estrellas
     - Crear `src/vista/mapa/interaccion.ts` con la rejilla uniforme de 16 px, la resolución del impacto en las 9 celdas vecinas dentro de 12 px (14 px en punteros gruesos), la agrupación de `pointermove`, `pointerdown` y `pointerleave` en `requestAnimationFrame` y la ficha con nombre, constelación y magnitud a un decimal
     - _Requisitos: 4.5, 4.14_
 
-  - [ ] 11.7 Escribir la prueba de propiedad de la detección de la estrella señalada
+  - [x] 11.7 Escribir la prueba de propiedad de la detección de la estrella señalada
     - **Propiedad 20: La detección de la Estrella señalada devuelve siempre la más cercana dentro del radio**
     - **Valida: Requisitos 4.5, 4.14**
 
-  - [ ] 11.8 Implementar el rótulo de lugar y fecha y el texto alternativo
+  - [x] 11.8 Implementar el rótulo de lugar y fecha y el texto alternativo
     - Crear `src/vista/mapa/rotulo.ts` con el nombre del Lugar_Graduacion, día, mes y año, hora y minutos en formato de 24 horas y el sufijo -05:00
     - Implementar `textoAlternativo()` de 80 a 500 caracteres con lugar, fecha con desplazamiento y constelaciones dibujadas, expuesto en el `aria-label` del lienzo con `role="img"`
     - _Requisitos: 4.6, 7.6_
 
-  - [ ] 11.9 Escribir la prueba de propiedad del rótulo de lugar y fecha
+  - [x] 11.9 Escribir la prueba de propiedad del rótulo de lugar y fecha
     - **Propiedad 21: El rótulo de lugar y fecha contiene siempre sus componentes**
     - **Valida: Requisito 4.6**
 
-  - [ ] 11.10 Escribir la prueba de propiedad del texto alternativo del mapa
+  - [x] 11.10 Escribir la prueba de propiedad del texto alternativo del mapa
     - **Propiedad 30: El texto alternativo del mapa siempre informa y cabe en su límite**
     - **Valida: Requisito 7.6**
 
-  - [ ] 11.11 Implementar `montarMapa` y la ruta de respaldo
+  - [x] 11.11 Implementar `montarMapa` y la ruta de respaldo
     - Crear `src/vista/mapa/mapa.ts` que orqueste las capas, devuelva `ControlMapa` con `redibujar`, `redimensionar`, `textoAlternativo` y `destruir`
     - Implementar el respaldo con `cielo` nulo: disco vacío, fondo estrellado decorativo determinista y el texto "El cielo tarda en cargar, pero la carta te espera", más la sustitución por un nodo con fondo plano cuando el contexto 2D no está disponible
     - _Requisitos: 4.8, 4.9, 4.10, 4.11, 4.13_
 
-  - [ ] 11.12 Implementar el bucle de titileo determinista
+  - [x] 11.12 Implementar el bucle de titileo determinista
     - Crear `src/vista/mapa/animacion.ts` con un único `requestAnimationFrame` que redibuje solo las estrellas, con fase senoidal derivada del Instante_Graduacion, y que no se inicie con movimiento reducido
     - _Requisitos: 3.6, 7.5, 7.8_
 
-  - [ ] 11.13 Escribir pruebas unitarias del Mapa_Estelar
+  - [x] 11.13 Escribir pruebas unitarias del Mapa_Estelar
     - Cubrir la ruta de respaldo con fondo decorativo y texto, el contexto 2D nulo con fondo plano, la rama sin respaldo cuando el cielo es válido, la retirada del cursor y el trato del exceso de 5000 ms como error
     - _Requisitos: 4.9, 4.10, 4.11, 4.13, 4.14_
 
@@ -321,24 +321,24 @@ Las tareas del bloque 19 están **bloqueadas por datos pendientes** (Instante_Gr
     - _Requisitos: 5.2, 5.3, 5.4, 5.7_
 
 - [ ] 13. Implementar los Guinos_Personales
-  - [ ] 13.1 Implementar la constelación Obsidian
+  - [x] 13.1 Implementar la constelación Obsidian
     - Crear `src/vista/guinos/obsidian.ts` con la lista ordenada de nombres de estrella y sus 4 a 9 segmentos como valor marcador, el trazo dorado sobre el mapa y la omisión silenciosa de figura y rótulo cuando menos de 5 de sus estrellas tienen altitud ≥ 0
     - _Requisitos: 6.4, 6.9_
 
-  - [ ] 13.2 Escribir la prueba de propiedad de la constelación Obsidian
+  - [x] 13.2 Escribir la prueba de propiedad de la constelación Obsidian
     - **Propiedad 29: La constelación Obsidian se dibuja exactamente cuando hay estrellas suficientes**
     - **Valida: Requisito 6.9**
 
-  - [ ] 13.3 Implementar las decoraciones personales
+  - [x] 13.3 Implementar las decoraciones personales
     - Crear `src/vista/guinos/decoraciones.ts` con un único SVG en línea de trazo dorado por referencia (Michi, Guchi, sanjuanero, Jeep Rubicon, física nuclear), ≤ 96 px en su lado mayor, con `role="img"` y `aria-label`, en una banda propia de la rejilla
     - Garantizar que con los guiños desactivados los nodos no se crean y ninguna regla reserva su espacio
     - _Requisitos: 6.5, 6.8_
 
-  - [ ] 13.4 Implementar el control de audio del sanjuanero
+  - [x] 13.4 Implementar el control de audio del sanjuanero
     - Crear `src/vista/guinos/audio.ts` con un control único de reproducción y silencio de ≥ 44 × 44 px, `volume = 0.5` y estado detenido en la primera presentación, con límite de 5000 ms sobre `canplay` que lo deja deshabilitado con indicación visible de audio no disponible
     - _Requisitos: 6.6, 6.10_
 
-  - [ ] 13.5 Escribir pruebas unitarias de los Guinos_Personales
+  - [x] 13.5 Escribir pruebas unitarias de los Guinos_Personales
     - Cubrir el trazo de Obsidian, las cinco decoraciones con su texto alternativo, la ausencia total de nodos con los guiños desactivados y el control de audio en sus estados disponible e indisponible
     - _Requisitos: 6.4, 6.5, 6.6, 6.8, 6.10_
 
@@ -368,27 +368,27 @@ Las tareas del bloque 19 están **bloqueadas por datos pendientes** (Instante_Gr
     - Leer `public/datos/catalogo-estelar.json` con el Lector_Catalogo completo y verificar sus invariantes y la equivalencia de ida y vuelta sobre el dato real
     - _Requisitos: 2.1, 2.6, 2.7_
 
-- [ ] 15. Integrar la Aplicacion
-  - [ ] 15.1 Cablear la secuencia de arranque
+- [x] 15. Integrar la Aplicacion
+  - [x] 15.1 Cablear la secuencia de arranque
     - Crear `src/main.ts` que lea el estado de sesión, inicie la precarga del catálogo en paralelo al portal, monte el Portal_Acceso, y al conceder el acceso monte la Pagina_Regalo con el Mapa_Estelar, el Lienzo_Carta y los Guinos_Personales según los interruptores
     - Consumir `regalo.config.json` como módulo importado, sin petición en tiempo de ejecución, y pasar el cielo calculado o `null` al mapa
     - Completar `index.html` con el orden del DOM igual al orden visual y `<meta name="robots" content="noindex">`
     - _Requisitos: 1.3, 1.7, 1.9, 4.8, 4.11, 8.2, 8.7_
 
-  - [ ] 15.2 Escribir pruebas de integración del flujo completo
+  - [x] 15.2 Escribir pruebas de integración del flujo completo
     - Cubrir en jsdom el recorrido de clave correcta a Pagina_Regalo con mapa y carta, la recarga en la misma sesión, el respaldo del mapa ante catálogo indisponible y el respaldo de la carta sin párrafos
     - _Requisitos: 1.3, 1.7, 4.9, 5.7_
 
-- [ ] 16. Punto de control - Asegurar que todas las pruebas pasen
+- [x] 16. Punto de control - Asegurar que todas las pruebas pasen
   - Ejecutar la suite completa con la Aplicacion cableada y preguntar al usuario si surgen dudas.
 
-- [ ] 17. Construir y verificar el paquete estático
-  - [ ] 17.1 Configurar el empaquetado publicable
+- [x] 17. Construir y verificar el paquete estático
+  - [x] 17.1 Configurar el empaquetado publicable
     - Añadir las fuentes woff2 autoalojadas con subconjunto latino en `public/fuentes/`, `robots.txt` y la configuración de `vite build` con rutas relativas
     - Crear `herramientas/verificar-paquete.ts` que revise `dist/`: presencia del Hash_Clave con formato de 64 hexadecimales minúsculos, ausencia de la clave en texto claro y ausencia de referencias a orígenes ajenos
     - _Requisitos: 1.6, 8.5, 8.7_
 
-  - [ ] 17.2 Escribir la prueba de verificación del paquete
+  - [x] 17.2 Escribir la prueba de verificación del paquete
     - Ejecutar la construcción y afirmar que `dist/` no contiene ninguna clave en texto claro, que el Hash_Clave cumple el formato y que ningún recurso apunta fuera del propio origen estático
     - _Requisitos: 1.6, 8.7_
 
@@ -411,25 +411,21 @@ Las tareas del bloque 19 están **bloqueadas por datos pendientes** (Instante_Gr
     - Reemplazar el valor marcador en `regalo.config.json` con el ISO 8601 y desplazamiento -05:00 confirmado, y verificar que el validador acepta el archivo
     - _Requisitos: 8.1, 8.4_
 
-  - [ ] 19.2 Registrar los valores de referencia del almanaque y activar su prueba
-    - **Bloqueada:** depende de 19.1
-    - Crear `pruebas/referencia/almanaque.json` con la altitud y el azimut geométricos de las 20 estrellas de menor magnitud para el Instante_Graduacion y Neiva, junto con la fuente publicada y su fecha de consulta
-    - Activar la prueba de comparación con tolerancia de 0.1 grados, hoy marcada como pendiente de forma visible en la salida
+  - [x] 19.2 Registrar los valores de referencia del almanaque y activar su prueba
+    - `pruebas/referencia/almanaque.json` con la altitud y el azimut geométricos de las 20 estrellas de menor magnitud para el Instante_Graduacion y Neiva, fuente Skyfield/efemérides JPL DE421 (segunda implementación independiente, no transcripción de un almanaque impreso — ver el `$comentario` del archivo) y fecha de consulta
+    - Prueba activada en `pruebas/unitarias/nucleo/astronomia/almanaque.test.ts`, comparación con tolerancia de 0.1 grados
     - _Requisitos: 3.8_
 
-  - [ ] 19.3 Incorporar el texto definitivo de la Carta
-    - **Bloqueada:** requiere el saludo, los párrafos y la firma que escriba el autor del regalo
-    - Reemplazar los valores marcador de `carta` en `regalo.config.json` respetando 1 a 12 párrafos de hasta 1200 caracteres, saludo y firma de hasta 120 caracteres
+  - [x] 19.3 Incorporar el texto definitivo de la Carta
+    - Reemplazados los valores marcador de `carta` en `regalo.config.json` con el texto de `carta-oficial.md` (saludo, 6 párrafos, firma), todos dentro de los límites del validador
     - _Requisitos: 5.1, 5.5, 5.6, 8.1_
 
-  - [ ] 19.4 Fijar la selección de estrellas de la constelación Obsidian
-    - **Bloqueada:** depende de 19.1, porque la figura se traza sobre estrellas visibles en Neiva a esa hora
-    - Reemplazar la lista marcador de `src/vista/guinos/obsidian.ts` con nombres reales del Catalogo_Estelar y entre 4 y 9 segmentos, y confirmar con una prueba que al menos 5 de sus estrellas están sobre el horizonte en el Instante_Graduacion
+  - [x] 19.4 Fijar la selección de estrellas de la constelación Obsidian
+    - Confirmado el gancho de Escorpio como definitivo: 8 estrellas reales, 7 segmentos, las 8 sobre el horizonte de Neiva (altitudes 28-57°) en el Instante_Graduacion confirmado; ver `pruebas/unitarias/vista/guinos/obsidian.test.ts`
     - _Requisitos: 6.4, 6.9_
 
-  - [ ] 19.5 Resolver el audio del sanjuanero
-    - **Bloqueada:** requiere la decisión sobre incluir audio y una grabación de uso permitido
-    - Si se incluye, añadir `public/audio/sanjuanero.mp3` con su atribución y poner `musica: true`; si no, dejar el interruptor en falso y confirmar con una prueba que no se crea ningún control ni se pide el recurso
+  - [x] 19.5 Resolver el audio del sanjuanero
+    - Se incluye: `public/audio/sanjuanero.mp3` (grabación de uso personal/privado del autor, sin distribución pública) y `musica: true` en `regalo.config.json`
     - _Requisitos: 6.6, 6.10_
 
   - [ ] 19.6 Generar el Hash_Clave definitivo

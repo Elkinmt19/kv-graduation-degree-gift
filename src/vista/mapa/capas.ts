@@ -66,6 +66,7 @@ import type {
 } from '../../nucleo/astronomia/modelo.js';
 import { seleccionarDibujables } from '../../nucleo/astronomia/motor.js';
 import { proyectar } from '../../nucleo/astronomia/proyeccion.js';
+import { PALETA_REGALO, type NombrePaleta } from '../../nucleo/diseno/contraste.js';
 import { normalizarDensidad, type TamanoMapa } from './circulo.js';
 import { FUENTE_ETIQUETA, TAMANO_FUENTE_ETIQUETA } from './etiquetas.js';
 import { radioPorMagnitud } from './radio.js';
@@ -179,7 +180,7 @@ export interface PaletaMapa {
  * sitio donde el codigo nombra los tokens del cielo, de modo que renombrar uno
  * en la hoja se corrige aqui y en ningun otro lugar.
  */
-export const TOKENS_PALETA_MAPA = {
+export const PROPIEDADES_PALETA = {
   cieloAlto: '--fondo-cielo-alto',
   cieloBajo: '--fondo-cielo-bajo',
   horizonte: '--horizonte',
@@ -200,6 +201,44 @@ export const PALETA_VACIA: PaletaMapa = {
   estrella: '',
   estrellaHalo: '',
   cardinal: '',
+};
+
+/**
+ * Capa de la Paleta_Regalo que declara cada token de {@link PROPIEDADES_PALETA}
+ * en `tokens.css`, para derivar {@link PALETA_DE_RESPALDO} sin repetir ningun
+ * literal de color fuera de esa hoja (Requisito 6.1).
+ */
+const CAPAS_PALETA_MAPA = {
+  cieloAlto: { nombre: 'negro-profundo', opacidad: 1 },
+  cieloBajo: { nombre: 'azul-noche', opacidad: 0.9 },
+  horizonte: { nombre: 'dorado', opacidad: 0.45 },
+  reticula: { nombre: 'azul-electrico', opacidad: 0.18 },
+  lineaConstelacion: { nombre: 'azul-electrico', opacidad: 0.55 },
+  estrella: { nombre: 'dorado', opacidad: 0.95 },
+  estrellaHalo: { nombre: 'azul-electrico', opacidad: 0.25 },
+  cardinal: { nombre: 'dorado', opacidad: 0.92 },
+} as const satisfies Readonly<Record<keyof PaletaMapa, { nombre: NombrePaleta; opacidad: number }>>;
+
+function formatearCapa(capa: { nombre: NombrePaleta; opacidad: number }): string {
+  const color = PALETA_REGALO[capa.nombre];
+  return `rgb(${String(color.r)} ${String(color.g)} ${String(color.b)} / ${String(capa.opacidad)})`;
+}
+
+/**
+ * Paleta que usa el mapa cuando el entorno no resuelve `getComputedStyle`
+ * (por ejemplo, en el empaquetado sin hojas de estilo). Reproduce exactamente
+ * los colores que declara `tokens.css` para cada rol, derivados de
+ * {@link PALETA_REGALO} en vez de repetir sus literales.
+ */
+export const PALETA_DE_RESPALDO: PaletaMapa = {
+  cieloAlto: formatearCapa(CAPAS_PALETA_MAPA.cieloAlto),
+  cieloBajo: formatearCapa(CAPAS_PALETA_MAPA.cieloBajo),
+  horizonte: formatearCapa(CAPAS_PALETA_MAPA.horizonte),
+  reticula: formatearCapa(CAPAS_PALETA_MAPA.reticula),
+  lineaConstelacion: formatearCapa(CAPAS_PALETA_MAPA.lineaConstelacion),
+  estrella: formatearCapa(CAPAS_PALETA_MAPA.estrella),
+  estrellaHalo: formatearCapa(CAPAS_PALETA_MAPA.estrellaHalo),
+  cardinal: formatearCapa(CAPAS_PALETA_MAPA.cardinal),
 };
 
 /**
@@ -251,14 +290,14 @@ export function leerPaletaMapa(
   };
 
   return {
-    cieloAlto: leer(TOKENS_PALETA_MAPA.cieloAlto),
-    cieloBajo: leer(TOKENS_PALETA_MAPA.cieloBajo),
-    horizonte: leer(TOKENS_PALETA_MAPA.horizonte),
-    reticula: leer(TOKENS_PALETA_MAPA.reticula),
-    lineaConstelacion: leer(TOKENS_PALETA_MAPA.lineaConstelacion),
-    estrella: leer(TOKENS_PALETA_MAPA.estrella),
-    estrellaHalo: leer(TOKENS_PALETA_MAPA.estrellaHalo),
-    cardinal: leer(TOKENS_PALETA_MAPA.cardinal),
+    cieloAlto: leer(PROPIEDADES_PALETA.cieloAlto),
+    cieloBajo: leer(PROPIEDADES_PALETA.cieloBajo),
+    horizonte: leer(PROPIEDADES_PALETA.horizonte),
+    reticula: leer(PROPIEDADES_PALETA.reticula),
+    lineaConstelacion: leer(PROPIEDADES_PALETA.lineaConstelacion),
+    estrella: leer(PROPIEDADES_PALETA.estrella),
+    estrellaHalo: leer(PROPIEDADES_PALETA.estrellaHalo),
+    cardinal: leer(PROPIEDADES_PALETA.cardinal),
   };
 }
 

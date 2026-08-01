@@ -28,22 +28,19 @@
  * `getComputedStyle` y pasa el color ya resuelto, igual que hacen las otras
  * capas del lienzo.
  *
- * ## Seleccion de estrellas: valor marcador
+ * ## Seleccion de estrellas: definitiva (tarea 19.4)
  *
- * La lista de {@link ESTRELLAS_OBSIDIAN} es **provisional**. La definitiva la
- * fija la tarea 19.4, que depende del autor del regalo y del
- * Instante_Graduacion confirmado.
- *
- * Criterio de la provisional, para que la figura se dibuje de verdad mientras
- * llega la definitiva: el gancho de Escorpio, ocho estrellas reales del
- * catalogo generado a partir de HYG v3, todas sobre el horizonte de Neiva
- * (latitud 2.9484, longitud -75.2795) en el instante marcador
- * 2026-07-31T18:00:00-05:00, con altitudes entre 28 y 58 grados. Se lee como el
- * perfil de una moto: el manillar en Dschubba, el motor en Antares, el chasis
- * bajando por Larawag hasta Sargas y el escape remontando por Iota-1 y Kappa
- * hasta la punta de Lesath y Shaula. Son estrellas brillantes (magnitud
- * aparente entre 1.06 y 2.99), asi que la figura queda legible y ninguna cae
- * por debajo del corte de dibujo del Requisito 4.1.
+ * La lista de {@link ESTRELLAS_OBSIDIAN} es la definitiva: el gancho de
+ * Escorpio, ocho estrellas reales del catalogo generado a partir de HYG v3,
+ * todas sobre el horizonte de Neiva (latitud 2.9484, longitud -75.2795) en el
+ * Instante_Graduacion confirmado 2026-07-31T18:00:00-05:00, con altitudes
+ * entre 28 y 57 grados (ver `pruebas/unitarias/vista/guinos/obsidian.test.ts`
+ * para el cielo real). Se lee como el perfil de una moto: el manillar en
+ * Dschubba, el motor en Antares, el chasis bajando por Larawag hasta Sargas y
+ * el escape remontando por Iota-1 y Kappa hasta la punta de Lesath y Shaula.
+ * Son estrellas brillantes (magnitud aparente entre 1.06 y 2.99), asi que la
+ * figura queda legible y ninguna cae por debajo del corte de dibujo del
+ * Requisito 4.1.
  */
 
 import { ALTITUD_HORIZONTE } from '../../nucleo/astronomia/motor.js';
@@ -94,8 +91,8 @@ export const FUENTE_ROTULO = `${String(TAMANO_ROTULO_PX)}px ${FAMILIA_ROTULO}`;
 export const SEPARACION_ROTULO = 10;
 
 /**
- * Estrellas de la figura, en orden de recorrido. **Valor marcador**: la
- * seleccion definitiva la fija la tarea 19.4. Los nombres son los que publica
+ * Estrellas de la figura, en orden de recorrido. Seleccion definitiva
+ * (tarea 19.4). Los nombres son los que publica
  * `public/datos/catalogo-estelar.json`, con la precedencia nombre propio ->
  * designacion Bayer -> Flamsteed -> `HIP <n>`.
  */

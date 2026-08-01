@@ -6,9 +6,13 @@ Requiere Node.js 20.11 o superior.
 
 ```bash
 npm install
-npm run dev      # servidor de desarrollo
-npm test         # suite de pruebas (Vitest + fast-check)
-npm run build    # valida regalo.config.json y genera dist/
+npm run dev               # servidor de desarrollo
+npm test                  # suite de pruebas (Vitest + fast-check)
+npm run verificar-tipos   # tsc --noEmit
+npm run build              # valida regalo.config.json (prebuild) y genera dist/
+npm run generar-catalogo   # regenera public/datos/catalogo-estelar.json desde datos-fuente/
+npm run verificar-paquete  # revisa dist/: Hash_Clave, ausencia de clave en texto claro, sin origenes ajenos
+npm run medir               # mediciones de navegador con Playwright (fuera de la suite de Vitest)
 ```
 
 ## Calcular el Hash_Clave
@@ -35,3 +39,7 @@ npm run hash-clave --silent -- "Clave De Ejemplo" | pbcopy
 - Recuerda que el argumento queda en el historial de tu intérprete de comandos. Si te importa, bórralo (`history -d`) o antepone un espacio a la línea cuando tu shell lo excluya del historial.
 - Usa preferiblemente caracteres ASCII: la normalización no aplica Unicode NFC/NFD, así que dos formas de escribir la misma letra acentuada producen hashes distintos.
 - La validación ocurre por completo en el navegador. El Hash_Clave es visible para cualquiera que inspeccione el paquete; el portal es un gesto de discreción, no un control de seguridad.
+
+## Datos fuente y créditos
+
+`public/datos/catalogo-estelar.json` se genera con `npm run generar-catalogo` a partir de los archivos versionados en `datos-fuente/` (HYG Database v3 y las líneas de constelación de d3-celestial), sin acceso a la red. Las licencias que exige cada fuente (CC BY-SA 2.5 y BSD-3-Clause) y el detalle de la tubería de generación están en `datos-fuente/CREDITOS.md`.

@@ -16,6 +16,7 @@
     "verificar-tipos": "tsc --noEmit",
     "hash-clave": "tsx herramientas/hash-clave.ts",
     "generar-catalogo": "tsx herramientas/generar-catalogo.ts",
+    "verificar-paquete": "tsx herramientas/verificar-paquete.ts",
     "medir": "playwright test"
   },
   "devDependencies": {

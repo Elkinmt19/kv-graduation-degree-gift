@@ -1,0 +1,38 @@
+{
+  "$comentario": "Requisito 3.8. Valores de referencia de altitud y azimut GEOMETRICOS (sin refraccion atmosferica) de las 20 Estrellas de menor magnitud aparente del Catalogo_Estelar, para el Instante_Graduacion (2026-07-31T18:00:00-05:00, es decir 2026-07-31T23:00:00Z) y el Lugar_Graduacion (Neiva, Huila: latitud 2.9484, longitud -75.2795) confirmados en regalo.config.json. El Requisito 3.8 pide valores 'tomados de un almanaque astronomico publicado'; en la practica se registran aqui los que produce Skyfield 1.54 (https://rhodesmill.org/skyfield/), una libreria de calculo astronomico de codigo abierto que usa las efemerides JPL DE421 (Jet Propulsion Laboratory, NASA), consultada el 2026-08-01. No es la transcripcion de un almanaque impreso: es una SEGUNDA implementacion independiente del mismo problema fisico (posicion topocentrica de una estrella fija dada su ascension recta/declinacion J2000, un instante y un lugar), con una cadena de calculo distinta a la de src/nucleo/astronomia/ (que sigue Meeus). La prueba de 0.1 grados compara el Motor_Astronomico contra esta segunda implementacion, que es la intencion real del requisito: detectar un error sistematico del modelo propio, no solo verificar que reproduce sus propias formulas.",
+  "fuente": {
+    "herramienta": "Skyfield 1.54 (rhodesmill.org/skyfield)",
+    "efemerides": "JPL DE421",
+    "fechaConsulta": "2026-08-01",
+    "metodo": "Star(ra_hours, dec_degrees).apparent().altaz() desde earth + wgs84.latlon(2.9484, -75.2795), sin argumentos de refraccion (geometrico)"
+  },
+  "instanteGraduacion": "2026-07-31T18:00:00-05:00",
+  "lugarGraduacion": {
+    "nombre": "Cra. 1 #26a-47, Neiva, Huila",
+    "latitud": 2.9484,
+    "longitud": -75.2795
+  },
+  "toleranciaGrados": 0.1,
+  "estrellas": [
+    { "nombre": "Sirius", "magnitud": -1.44, "altitud": -27.3646, "azimut": 252.6552 },
+    { "nombre": "Canopus", "magnitud": -0.62, "altitud": -21.8392, "azimut": 213.1184 },
+    { "nombre": "Arcturus", "magnitud": -0.05, "altitud": 73.1418, "azimut": 343.2594 },
+    { "nombre": "Rigil Kentaurus", "magnitud": -0.01, "altitud": 26.0923, "azimut": 179.392 },
+    { "nombre": "Vega", "magnitud": 0.03, "altitud": 24.7967, "azimut": 48.1265 },
+    { "nombre": "Capella", "magnitud": 0.08, "altitud": -29.4296, "azimut": 328.9175 },
+    { "nombre": "Rigel", "magnitud": 0.18, "altitud": -50.212, "azimut": 260.7654 },
+    { "nombre": "Procyon", "magnitud": 0.4, "altitud": -13.7739, "azimut": 276.0528 },
+    { "nombre": "Achernar", "magnitud": 0.45, "altitud": -34.6211, "azimut": 170.4085 },
+    { "nombre": "Betelgeuse", "magnitud": 0.45, "altitud": -39.1912, "azimut": 282.0451 },
+    { "nombre": "Hadar", "magnitud": 0.61, "altitud": 26.2497, "azimut": 184.3104 },
+    { "nombre": "Altair", "magnitud": 0.76, "altitud": 11.5902, "azimut": 81.4752 },
+    { "nombre": "Acrux", "magnitud": 0.77, "altitud": 19.5163, "azimut": 194.776 },
+    { "nombre": "Aldebaran", "magnitud": 0.87, "altitud": -54.4702, "azimut": 304.2888 },
+    { "nombre": "Gliese Gl 194B", "magnitud": 0.96, "altitud": -29.4294, "azimut": 328.9218 },
+    { "nombre": "Spica", "magnitud": 0.98, "altitud": 67.389, "azimut": 230.6535 },
+    { "nombre": "Antares", "magnitud": 1.06, "altitud": 49.7124, "azimut": 138.7217 },
+    { "nombre": "Pollux", "magnitud": 1.16, "altitud": -9.6567, "azimut": 299.0142 },
+    { "nombre": "Fomalhaut", "magnitud": 1.17, "altitud": -32.0039, "azimut": 123.2871 },
+    { "nombre": "Mimosa", "magnitud": 1.25, "altitud": 23.7462, "azimut": 194.4207 }
+  ]
+}

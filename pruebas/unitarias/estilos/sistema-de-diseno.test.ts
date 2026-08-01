@@ -14,6 +14,7 @@ import {
   UMBRAL_TACTIL,
 } from '../../../src/vista/disposicion.js';
 import {
+  HOJA_DE_FUENTES,
   HOJA_DE_TOKENS,
   extraerDeclaraciones,
   interpretarCapaDeToken,
@@ -302,7 +303,7 @@ describe('Requisito 6.7: serif para la Carta, sans-serif para rotulos y controle
   it('ninguna hoja declara una familia tipografica fuera de los tokens', () => {
     const familiasAdmitidas = new Set(['var(--familia-carta)', 'var(--familia-ui)', 'inherit']);
     const infractores = hojas
-      .filter((hoja) => hoja.archivo !== HOJA_DE_TOKENS)
+      .filter((hoja) => hoja.archivo !== HOJA_DE_TOKENS && hoja.archivo !== HOJA_DE_FUENTES)
       .flatMap((hoja) =>
         extraerDeclaraciones(hoja)
           .filter((declaracion) => declaracion.propiedad === 'font-family')

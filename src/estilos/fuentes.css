@@ -1,0 +1,43 @@
+/**
+ * Declaraciones `@font-face` de las fuentes autoalojadas (Requisito 8.7).
+ *
+ * `--familia-ui` (Inter) y `--familia-carta` (EB Garamond) se sirven como
+ * woff2 propios en `public/fuentes/`, subconjunto latino, en vez de pedirlas a
+ * Google Fonts: la Aplicacion no hace ninguna peticion a un origen ajeno en
+ * tiempo de ejecucion. Solo se incluyen los pesos y estilos que el resto de
+ * las hojas usa de verdad (ver `--peso-titulo`, `--peso-carta` en
+ * `tokens.css`, y el itálico de `.carta__saludo`/`.carta__firma` en
+ * `carta.css`).
+ */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fuentes/inter-400-normal-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fuentes/inter-600-normal-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fuentes/eb-garamond-400-normal-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fuentes/eb-garamond-400-italic-latin.woff2') format('woff2');
+}

@@ -1,0 +1,99 @@
+/**
+ * Estilos de los Guinos_Personales decorativos (`src/vista/guinos/decoraciones.ts`).
+ *
+ * Requisito 6.1: esta hoja no declara ningun literal de color. El trazo de
+ * cada figura va en `var(--linea-obsidian)` escrito directamente en el
+ * atributo SVG (ver `decoraciones.ts`), no aqui: un atributo en linea no es
+ * una declaracion CSS y `pruebas/utilidades/estilos.ts` solo inventaria las
+ * hojas de `src/estilos/`.
+ *
+ * Requisito 6.5: cada decoracion mide a lo sumo 96 px en su lado mayor y las
+ * cinco viven en una banda propia, separada del Circulo_Horizonte y del texto
+ * de la Carta. Con los Guinos_Personales desactivados `decoraciones.ts` no
+ * agrega ningun nodo, asi que esta clase nunca aparece en el DOM y no reserva
+ * espacio (Requisito 6.8).
+ *
+ * Los nombres de clase son los que exporta `CLASES_DECORACIONES` en
+ * `src/vista/guinos/decoraciones.ts`.
+ *
+ * Requisito 6.6: `.guinos-audio__boton` (`CLASES_AUDIO` en
+ * `src/vista/guinos/audio.ts`) mide al menos `--area-tactil-min` (44 px) en
+ * ambos lados en todo estado de reproduccion, incluido `no-disponible`. El
+ * boton lleva icono y texto visibles (fondo dorado, como el boton de ingreso
+ * del Portal_Acceso) para que la invitacion a reproducir el sanjuanero no
+ * dependa de leer un `aria-label`.
+ */
+
+@import './tokens.css';
+
+.guinos-decoraciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-4);
+  padding: var(--espacio-3) 0;
+}
+
+.guinos-decoraciones__item {
+  display: inline-flex;
+}
+
+.guinos-decoraciones__figura {
+  width: clamp(48px, 8vw, 96px);
+  height: clamp(48px, 8vw, 96px);
+}
+
+@media (max-width: 767px) {
+  .guinos-decoraciones {
+    gap: var(--espacio-3);
+  }
+}
+
+/* --- Control de reproduccion del sanjuanero (Requisitos 6.6, 6.10) ------- */
+
+.guinos-audio__boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-3);
+  min-width: var(--area-tactil-min);
+  min-height: var(--area-tactil-min);
+  width: 100%;
+  max-width: 28rem;
+  margin: var(--espacio-4) auto;
+  padding: var(--espacio-3) var(--espacio-6);
+  border: 1px solid var(--borde-acento);
+  border-radius: var(--radio-borde);
+  background-color: var(--fondo-boton);
+  color: var(--texto-sobre-dorado);
+  font-family: var(--familia-ui);
+  font-size: var(--cuerpo-ui);
+  font-weight: var(--peso-titulo);
+  line-height: var(--alto-linea-ui);
+  text-align: center;
+}
+
+.guinos-audio__boton:hover:not(:disabled) {
+  background-color: var(--fondo-boton-senalado);
+}
+
+.guinos-audio__boton:disabled {
+  border-color: var(--borde-deshabilitado);
+  background-color: var(--fondo-boton-deshabilitado);
+  color: var(--texto-deshabilitado);
+}
+
+.guinos-audio__boton[data-estado='reproduciendo'] {
+  border-color: var(--borde-frio);
+}
+
+.guinos-audio__icono {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.guinos-audio__texto {
+  flex: 1 1 auto;
+}

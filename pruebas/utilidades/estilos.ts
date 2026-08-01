@@ -27,6 +27,14 @@ export const DIRECTORIO_ESTILOS = fileURLToPath(new URL('../../src/estilos/', im
 /** Unica hoja autorizada a declarar literales de color (Requisito 6.1). */
 export const HOJA_DE_TOKENS = 'tokens.css';
 
+/**
+ * Unica hoja autorizada a declarar nombres de familia tipografica literales
+ * (Requisito 8.7): sus `@font-face` deben nombrar la familia que autoalojan,
+ * lo que no es "usar" una tipografia fuera de los tokens sino definirla, igual
+ * que `tokens.css` define los colores que las demas hojas solo referencian.
+ */
+export const HOJA_DE_FUENTES = 'fuentes.css';
+
 /** Hoja de estilo leida del disco. */
 export interface HojaDeEstilo {
   /** Nombre del archivo, relativo a `src/estilos/`. */

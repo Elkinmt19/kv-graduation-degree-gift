@@ -7,6 +7,7 @@ import {
   PROPIEDADES_PALETA,
   type PaletaMapa,
 } from '../../../src/vista/mapa/capas.js';
+import { CLASES_FICHA } from '../../../src/vista/mapa/interaccion.js';
 import {
   interpretarCapaDeToken,
   inventariarLiteralesDeColor,
@@ -50,7 +51,10 @@ function clasesDeLaHoja(): Set<string> {
 describe('mapa.css estila exactamente las clases que el Mapa_Estelar emite', () => {
   it('los selectores de la hoja son los del contrato CLASES_MAPA', () => {
     const enLaHoja = clasesDeLaHoja();
-    const delContrato = new Set<string>(Object.values(CLASES_MAPA));
+    const delContrato = new Set<string>([
+      ...Object.values(CLASES_MAPA),
+      ...Object.values(CLASES_FICHA),
+    ]);
 
     expect(enLaHoja.size).toBeGreaterThan(0);
 
